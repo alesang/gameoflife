@@ -19,6 +19,11 @@
         <thucydides.version>0.9.268</thucydides.version>
         <jelastic.context>gameoflife</jelastic.context>
         <jelastic.environment>wakaleo</jelastic.environment>
+	<cargo.hostname>192.168.1.100</cargo.hostname>
+            <cargo.servlet.port>8083</cargo.servlet.port>
+            <cargo.tomcat.manager.url>http://192.168.1.100:8083/manager</cargo.tomcat.manager.url>
+            <cargo.remote.username>admin</cargo.remote.username>
+            <cargo.remote.password>admin</cargo.remote.password>
     </properties>
 
     <scm>
@@ -142,6 +147,37 @@
                     <api_hoster>app.jelastic.servint.net</api_hoster>
                 </configuration>
             </plugin>
+            <plugin>
+        	<groupId>org.codehaus.cargo</groupId>
+        	<artifactId>cargo-maven2-plugin</artifactId>
+       		 <configuration>
+           		 <container>
+               		 <containerId>tomcat7x</containerId>
+               		 <type>remote</type>
+           		 </container>
+            <configuration>
+                <type>runtime</type>
+                <properties>
+                    <cargo.hostname>${cargo.hostname}</cargo.hostname>
+                    <cargo.servlet.port>${cargo.servlet.port}</cargo.servlet.port>
+                    <cargo.tomcat.manager.url>${cargo.tomcat.manager.url}</cargo.tomcat.manager.url>
+                    <cargo.remote.username>${cargo.remote.username}</cargo.remote.username>
+                    <cargo.remote.password>${cargo.remote.password}</cargo.remote.password>
+                </properties>
+            </configuration>
+            <deployer>
+                <type>remote</type>
+            </deployer>
+            <deployables>
+                <deployable>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>${project.artifactId}</artifactId>
+                    <type>${project.packaging}</type>
+                </deployable>
+            </deployables>
+
+        </configuration>
+    </plugin>
 
         </plugins>
 
